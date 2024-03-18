@@ -24,15 +24,12 @@ import org.dependencytrack.model.Vulnerability.Source;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.Index;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-import javax.jdo.annotations.Unique;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Model class for tracking the attribution of versions affected by a given {@link Vulnerability}.
@@ -50,8 +47,6 @@ import java.util.UUID;
  * @since 4.7.0
  */
 @PersistenceCapable
-@Index(name = "AFFECTEDVERSIONATTRIBUTION_KEYS_IDX", members = {"vulnerability", "vulnerableSoftware"})
-@Unique(name = "AFFECTEDVERSIONATTRIBUTION_COMPOSITE_IDX", members = {"source", "vulnerability", "vulnerableSoftware"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AffectedVersionAttribution implements Serializable {
 
@@ -83,11 +78,6 @@ public class AffectedVersionAttribution implements Serializable {
     @Column(name = "VULNERABLE_SOFTWARE", allowsNull = "false")
     @JsonIgnore
     private VulnerableSoftware vulnerableSoftware;
-
-    @Persistent(customValueStrategy = "uuid")
-    @Unique(name = "AFFECTEDVERSIONATTRIBUTION_UUID_IDX")
-    @Column(name = "UUID", jdbcType = "VARCHAR", length = 36, allowsNull = "false")
-    private UUID uuid;
 
     public AffectedVersionAttribution() {
     }
@@ -146,14 +136,6 @@ public class AffectedVersionAttribution implements Serializable {
 
     public void setVulnerableSoftware(final VulnerableSoftware vulnerableSoftware) {
         this.vulnerableSoftware = vulnerableSoftware;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(final UUID uuid) {
-        this.uuid = uuid;
     }
 
 }

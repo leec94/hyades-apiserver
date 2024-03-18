@@ -28,4 +28,15 @@
             <column name="PURL"/>
         </createIndex>
     </changeSet>
+
+    <changeSet id="v5.5.0-2" author="nscuro@protonmail.com">
+        <dropIndex tableName="AFFECTEDVERSIONATTRIBUTION" indexName="AFFECTEDVERSIONATTRIBUTION_KEYS_IDX"/>
+        <dropUniqueConstraint tableName="AFFECTEDVERSIONATTRIBUTION" constraintName="AFFECTEDVERSIONATTRIBUTION_UUID_IDX"/>
+        <dropColumn tableName="AFFECTEDVERSIONATTRIBUTION" columnName="UUID"/>
+        <createIndex tableName="AFFECTEDVERSIONATTRIBUTION" indexName="AFFECTEDVERSIONATTRIBUTION_COMPOSITE_IDX" unique="true">
+            <column name="SOURCE"/>
+            <column name="VULNERABILITY"/>
+            <column name="VULNERABLE_SOFTWARE"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>
